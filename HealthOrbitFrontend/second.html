@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Health Orbit - Earthquake Tracker</title>
+    <link rel="stylesheet" href="second.css" />
+</head>
+<body>
+<div class="container">
+    <div id="last-earthquake-info" class="earthquake-info">
+        <h2>Latest Earthquake Info</h2>
+        <p>Loading latest earthquake info...</p>
+    </div>
+
+    <p>Select a country to zoom in:</p>
+    <select id="country-select">
+        <option value="">-- Select Country --</option>
+        <option value="USA">USA</option>
+        <option value="Japan">Japan</option>
+        <option value="Turkey">Turkey</option>
+        <option value="Italy">Italy</option>
+        <option value="Indonesia">Indonesia</option>
+        <option value="Chile">Chile</option>
+        <option value="North Macedonia">North Macedonia</option>
+        <option value="Nepal">Nepal</option>
+    </select>
+
+    <div id="summary-info" class="earthquake-info">
+        <h2>Summary</h2>
+        <p>Loading summary info...</p>
+    </div>
+
+    <div id="map"></div>
+
+    <button id="hamburger" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Slide-in menu -->
+    <nav id="slide-menu" aria-hidden="true">
+        <ul>
+            <li id="menu-profile">Profile</li>
+            <li id="menu-alert">Alerts</li>
+        </ul>
+    </nav>
+
+    <!-- Profile view -->
+    <!-- Profile view -->
+    <div id="profile-view" class="side-view hidden">
+        <h2>Profile</h2>
+        <div class="profile-container">
+            <img src="fb.png" alt="Profile Picture" class="profile-pic">
+            <div class="profile-details" style="text-align: left">
+                <p><strong>Username:</strong> Ilina Stevanoska</p>
+                <p><strong>Email:</strong> ilina@example.com</p>
+                <label for="region-select"><strong>Region:</strong></label>
+                <select id="region-select">
+                    <option>North Macedonia</option>
+                    <option>USA</option>
+                    <option>Japan</option>
+                    <option>Turkey</option>
+                    <option>Italy</option>
+                    <option>Indonesia</option>
+                    <option>Chile</option>
+                    <option>Nepal</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <h3 style="color: #d62828">Rescue Team</h3>
+            <ul class="team-list" id="team-list">
+                <li>Ilina Stevanoska</li>
+                <li>Magdalena Stankovska</li>
+                <li>Petar Canoski</li>
+            </ul>
+            <button class="team-btn" onclick="addTeamMember()">Add Team Member</button>
+            <button class="team-btn" onclick="createNewTeam()">Create New Team</button>
+        </div>
+
+        <button id="logout-btn" onclick="logout()" class="action-btn" style="margin-top:30px">🔓 Log Out</button>
+        <button class="close-btn action-btn">❌ Close</button>
+    </div>
+
+
+
+    <!-- Alert view -->
+    <div id="alert-view" class="side-view hidden">
+        <h2>Alerts</h2>
+        <div id="alerts"></div>
+        <button class="close-btn">Close</button>
+    </div>
+    <audio id="alert-audio" src="alert-sound.mp3" preload="auto"></audio>
+
+
+</div>
+
+<!--AIzaSyAfkuPHD4ZkfzBxC0PxfDUzDgbB-N8-NQU-->
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfkuPHD4ZkfzBxC0PxfDUzDgbB-N8-NQU&libraries=marker&callback=initMap"
+        async
+        defer
+></script>
+<script src="script.js" defer></script>
+
+<script>
+    function logout()
+    {
+        window.location.href = "html.html"
+    }
+</script>
+<script>
+    function addTeamMember() {
+        const name = prompt("Enter the name of the new team member:");
+        if (name && name.trim() !== "") {
+            const li = document.createElement("li");
+            li.textContent = name.trim();
+            document.getElementById("team-list").appendChild(li);
+        }
+    }
+
+    function createNewTeam() {
+        if (confirm("Are you sure you want to create a new team? This will remove all current members.")) {
+            const list = document.getElementById("team-list");
+            list.innerHTML = "";
+            const leader = prompt("Enter the name of the new team leader:");
+            if (leader && leader.trim() !== "") {
+                const li = document.createElement("li");
+                li.textContent = leader.trim();
+                list.appendChild(li);
+            }
+        }
+    }
+
+    // Optional: log selected region
+    document.getElementById("region-select").addEventListener("change", function() {
+        console.log("Selected region:", this.value);
+    });
+
+
+
+</script>
+
+
+
+</body>
+</html>
+
+
+
