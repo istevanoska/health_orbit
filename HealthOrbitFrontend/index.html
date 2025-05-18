@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Damage Alerts</title>
+</head>
+<body>
+<h1>Damage Alerts</h1>
+<div id="alerts"></div>
+
+<script>
+    async function fetchAlerts() {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/alerts');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const alerts = await response.json();
+
+            const alertsDiv = document.getElementById('alerts');
+            if (alerts.length === 0) {
+                alertsDiv.innerHTML = '<p>No alerts yet.</p>';
+                return;
+            }
+
+            alertsDiv.innerHTML = alerts.map(alert => `
+          <div style="border:1px solid red; margin:10px; padding:10px;">
+            <p><strong>Severity:</strong> ${alert.severity}</p>
+            <p><strong>Location:</strong> (${alert.lat}, ${alert.lon})</p>
+            <p><strong>Time:</strong> ${alert.timestamp}</p>
+          </div>
+        `).join('');
+        } catch (error) {
+            console.error('Fetch error:', error);
+            document.getElementById('alerts').innerText = 'Error loading alerts.';
+        }
+    }
+
+    // Fetch alerts every 5 seconds
+    fetchAlerts();
+    setInterval(fetchAlerts, 5000);
+</script>
+</body>
+</html>

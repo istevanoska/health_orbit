@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Health Orbit</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+    <div class="form-box">
+        <h1>Health Orbit</h1>
+        <p>Earthquake Damage Detector</p>
+
+        <div class="toggle-buttons">
+            <button type="button" onclick="showLogin()">Sign In</button>
+            <button type="button" onclick="showRegister()">Register</button>
+        </div>
+
+        <form id="user-form" > <!-- блокирај submit -->
+            <input type="text" id="username" placeholder="Username" class="input-field" required />
+            <input type="email" id="email" placeholder="E-mail" class="input-field" />
+            <input type="password" id="password" placeholder="Password" class="input-field" required />
+            <input type="text" id="region" placeholder="Region" class="input-field" required />
+
+            <button  class="submit-btn" id="submit-btn" onclick="gotosecond()">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!--<script>-->
+<!--    const emailInput = document.getElementById('email');-->
+<!--    const submitBtn = document.getElementById('submit-btn');-->
+
+<!--    function gotosecond()-->
+<!--    {-->
+<!--        window.location.href = 'second.html'-->
+<!--    }-->
+
+<!--    function showLogin() {-->
+<!--        // emailInput.style.display = 'none';-->
+<!--        submitBtn.textContent = 'Sign In';-->
+<!--    }-->
+
+<!--    function showRegister() {-->
+<!--        // emailInput.style.display = 'block';-->
+<!--        submitBtn.textContent = 'Register';-->
+<!--    }-->
+
+<!--    // Default view: show Register (with email)-->
+<!--    window.onload = showRegister;-->
+<!--</script>-->
+<script>
+    const emailInput = document.getElementById('email');
+    const submitBtn = document.getElementById('submit-btn');
+
+    let currentMode = "register"; // default
+
+    function gotosecond() {
+        window.location.href = 'second.html';
+    }
+
+    function showLogin() {
+        submitBtn.textContent = 'Sign In';
+        currentMode = "login";
+    }
+
+    function showRegister() {
+        submitBtn.textContent = 'Register';
+        currentMode = "register";
+    }
+
+    // Default view: show Register (with email)
+    window.onload = showRegister;
+
+    // Handle form submission
+    document.getElementById('user-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (currentMode === "register") {
+            // Optional: validate inputs here
+            gotosecond(); // Redirect to second.html
+        } else {
+            // Optional: implement login logic
+            gotosecond(); // You can use a different page for login if needed
+        }
+    });
+</script>
+
+</body>
+</html>
