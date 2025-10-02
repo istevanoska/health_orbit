@@ -23,4 +23,3 @@ for fname in os.listdir(images_dir):
         if os.path.exists(target_path):
             shutil.copy(target_path, os.path.join(output_targets_dir, target_name))
 
-print("✅ Earthquake images and targets copied.")

@@ -2,20 +2,16 @@ from sentinelhub import SentinelHubRequest, SHConfig, DataCollection, MimeType, 
 from dotenv import load_dotenv
 import os
 
-# ✅ Load environment variables
 load_dotenv()
 
-# ✅ Configure Sentinel Hub using env variables
 config = SHConfig()
 config.sh_client_id = os.getenv("SH_CLIENT_ID")
 config.sh_client_secret = os.getenv("SH_CLIENT_SECRET")
-config.instance_id = os.getenv("SH_INSTANCE_ID")  # Optional if not using custom instance
+config.instance_id = os.getenv("SH_INSTANCE_ID")
 
-# ✅ Define bounding box and resolution
 bbox = BBox(bbox=[21.40, 41.97, 21.45, 42.00], crs="EPSG:4326")
-resolution = 10  # meters per pixel
+resolution = 10
 
-# ✅ Create request
 request = SentinelHubRequest(
     evalscript="""
     //VERSION=3
@@ -41,10 +37,8 @@ request = SentinelHubRequest(
     ],
     bbox=bbox,
     size=bbox_to_dimensions(bbox, resolution),
-    config=config  # ✅ Pass the loaded config
+    config=config
 )
 
-# ✅ Get image
-image = request.get_data()[0]  # NumPy array with shape (H, W, 3)
+image = request.get_data()[0]
 
-# Optional: Save or display image using matplotlib or OpenCV

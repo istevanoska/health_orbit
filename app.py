@@ -16,7 +16,6 @@ from email.message import EmailMessage
 import os
 from io import BytesIO
 
-# Sentinel Hub imports
 from sentinelhub import SHConfig, SentinelHubRequest, DataCollection, MimeType, CRS, BBox
 
 def get_sh_config():
@@ -83,7 +82,6 @@ def get_sentinel_image(lat, lon, date_from, date_to, width=512, height=512):
 #         st.error(f"❌ Email not sent. File {image_path} not found.")
 
 
-# Load model
 model = models.resnet18(pretrained=False)
 model.fc = nn.Linear(model.fc.in_features, 2)
 model.load_state_dict(torch.load('model.pth', map_location='cpu'))
@@ -96,15 +94,14 @@ transform = transforms.Compose([
     transforms.ToTensor(),
 ])
 
-# Streamlit UI
 st.title("🌍 HealthOrbit – Earthquake Damage Detector")
 
-st.subheader("🛰️ Retrieve Sentinel-2 Image or Upload Manually")
+st.subheader("Retrieve Sentinel-2 Image or Upload Manually")
 lat = st.number_input("Latitude", value=41.9981)
 lon = st.number_input("Longitude", value=21.4254)
 date_from = st.date_input("From Date", datetime(2023, 4, 1))
 date_to = st.date_input("To Date", datetime(2023, 4, 10))
-fetch_button = st.button("📥 Fetch Sentinel-2 Image")
+fetch_button = st.button("Fetch Sentinel-2 Image")
 
 sentinel_img = None
 if fetch_button:
@@ -153,7 +150,7 @@ if input_image:
 
         output_path = os.path.join(os.getcwd(), "output.png")
         result.save(output_path)
-        st.image(result, caption="🧠 Model Attention Map", use_column_width=True)
+        # st.image(result, caption="🧠 Model Attention Map", use_column_width=True)
 
         if damaged_coords:
             for coord in damaged_coords[:3]:
@@ -171,14 +168,14 @@ if input_image:
                     "severity": "high",
                     "timestamp": datetime.utcnow().isoformat()
                 }
-                try:
-                    response = requests.post("http://localhost:8000/api/alerts", json=alert_data)
-                    if response.status_code == 200:
-                        st.success(f"✅ Alert sent to backend for {lat_alert:.6f}, {lon_alert:.6f}")
-                    else:
-                        st.warning(f"⚠️ Backend alert failed for {lat_alert:.6f}, {lon_alert:.6f}")
-                except Exception as e:
-                    st.error(f"❌ Error sending alert: {e}")
+                # try:
+                #     response = requests.post("http://localhost:8000/api/alerts", json=alert_data)
+                #     if response.status_code == 200:
+                #         st.success(f"✅ Alert sent to backend for {lat_alert:.6f}, {lon_alert:.6f}")
+                #     else:
+                #         st.warning(f"⚠️ Backend alert failed for {lat_alert:.6f}, {lon_alert:.6f}")
+                # except Exception as e:
+                #     st.error(f"❌ Error sending alert: {e}")
 
     if pred == 0:
         st.success("✅ This building appears intact.")
