@@ -2,3 +2,8 @@ dataset
 dataset_earthquake_only
 images
 targets
+eccv_train.json
+eccv_val.json
+*.json
+data/
+datasets/
