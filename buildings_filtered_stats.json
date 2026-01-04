@@ -1,0 +1,13 @@
+{
+  "total": 1029726,
+  "kept": 236527,
+  "dropped": 793199,
+  "reasons": {
+    "no_url": 0,
+    "not_building_candidate": 793199,
+    "kept": 236527
+  },
+  "url_check_enabled": false,
+  "elapsed_seconds": 4.79,
+  "items_per_second": 214803.33
+}
